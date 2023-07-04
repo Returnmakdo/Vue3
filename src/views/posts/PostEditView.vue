@@ -18,14 +18,16 @@
         <button class="btn btn-primary">수정</button>
       </template>
     </PostForm>
+    <AppAlert :items="alerts" />
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { getPostById, UpdatePost } from '@/api/posts';
+import { getPostById, updatePost } from '@/api/posts';
 import PostForm from '@/components/posts/PostForm.vue';
+import AppAlert from '@/components/AppAlert.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -35,40 +37,40 @@ const form = ref({
   title: null,
   content: null,
 });
-
 const fetchPost = async () => {
   try {
     const { data } = await getPostById(id);
     setForm(data);
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.error(error);
+    vAlert(error.message);
   }
 };
-
 const setForm = ({ title, content }) => {
   form.value.title = title;
   form.value.content = content;
 };
-
 fetchPost();
-
 const edit = async () => {
   try {
-    await UpdatePost(id, { ...form.value });
-    router.push({
-      name: 'PostDetail',
-      params: { id },
-    });
-  } catch (e) {
-    console.log(e);
+    await updatePost(id, { ...form.value });
+    // router.push({ name: 'PostDetail', params: { id } });
+    vAlert('수정이 완료되었습니다!', 'success');
+  } catch (error) {
+    console.error(error);
+    vAlert(error.message);
   }
 };
 
-const goDetailPage = () => {
-  router.push({
-    name: 'PostDetail',
-    params: { id },
-  });
+const goDetailPage = () => router.push({ name: 'PostDetail', params: { id } });
+
+// alert
+const alerts = ref([]);
+const vAlert = (message, type = 'error') => {
+  alerts.value.push({ message, type });
+  setTimeout(() => {
+    alerts.value.shift();
+  }, 2000);
 };
 </script>
 
