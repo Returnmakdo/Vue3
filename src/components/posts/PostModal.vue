@@ -20,7 +20,6 @@
 
 <script setup>
 import { computed } from 'vue';
-import AppModal from '../AppModal.vue';
 const props = defineProps({
   modelValue: Boolean,
   title: String,
@@ -28,18 +27,16 @@ const props = defineProps({
   createdAt: [String, Number],
 });
 const emit = defineEmits(['update:modelValue']);
+
 const show = computed({
   get() {
     return props.modelValue;
   },
   set(value) {
-    console.log(value);
     emit('update:modelValue', value);
   },
 });
-const closeModal = () => {
-  show.value = false;
-};
+const closeModal = () => (show.value = false);
 </script>
 
 <style lang="scss" scoped></style>

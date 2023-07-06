@@ -2,7 +2,6 @@
   <Transition>
     <div v-if="modelValue">
       <div class="modal-backdrop fade show"></div>
-      <!-- Modal -->
       <div
         class="modal fade show d-block"
         tabindex="-1"
@@ -13,13 +12,10 @@
           <div class="modal-content">
             <div class="modal-header">
               <slot name="header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">
-                  {{ title }}
-                </h1>
+                <h5 class="modal-title" id="exampleModalLabel">{{ title }}</h5>
                 <button
                   type="button"
                   class="btn-close"
-                  data-bs-dismiss="modal"
                   aria-label="Close"
                   @click="$emit('update:modelValue', false)"
                 ></button>
@@ -46,7 +42,7 @@ defineProps({
 defineEmits(['close', 'update:modelValue']);
 </script>
 
-<style>
+<style scoped>
 .v-enter-from,
 .v-leave-to {
   opacity: 0;
