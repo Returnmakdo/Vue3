@@ -19,6 +19,6 @@ export function updatePost(id, data) {
   // 수정하는 메서드이다.
 }
 
-export function DeletePost(id) {
+export function deletePost(id) {
   return posts.delete(`/${id}`);
 }
