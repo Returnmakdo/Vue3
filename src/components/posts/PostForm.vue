@@ -1,9 +1,12 @@
 <template>
   <form>
     <div class="mb-3">
-      <label for="exampleFormControlInput1" class="form-label">제목</label>
+      <label for="title" class="form-label">제목</label>
+      <!-- autofocus -->
+      <!-- v-color="'yellow'" -->
       <input
         :value="title"
+        v-focus
         @input="$emit('update:title', $event.target.value)"
         type="text"
         class="form-control"
@@ -11,7 +14,7 @@
       />
     </div>
     <div class="mb-3">
-      <label for="exampleFormControlTextarea1" class="form-label">내용</label>
+      <label for="content" class="form-label">내용</label>
       <textarea
         :value="content"
         @input="$emit('update:content', $event.target.value)"
@@ -21,12 +24,17 @@
       ></textarea>
     </div>
     <div class="d-flex gap-2 mt-4">
-      <slot name="actions"></slot>
+      <slot name="actions"> </slot>
     </div>
   </form>
 </template>
 
 <script setup>
+// const vFocus = {
+// 	mounted: el => {
+// 		el.focus();
+// 	},
+// };
 defineProps({
   title: String,
   content: String,
